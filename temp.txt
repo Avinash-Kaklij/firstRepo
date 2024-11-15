@@ -1,10 +1,79 @@
-if (matchingHarEntry) {
-        // Extract the path for the response data from the HAR entry
-        const responseFilePath = path.join(folderPath, matchingHarEntry.response.path);
+const fs = require('fs');
+const path = require('path');
+const { test, expect } = require('@playwright/test');
 
-        // Load the response data from the folder
+// Function to load the HAR file
+function loadHarFile(harFilePath) {
+    return JSON.parse(fs.readFileSync(harFilePath, 'utf8'));
+}
+
+// Function to load a JSON file from a specified path
+function loadJsonFile(filePath) {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+// Function to normalize the request body (to handle dynamic fields, if any)
+function normalizeRequestBody(requestBody) {
+    // Adjust this function if specific fields need to be normalized
+    return JSON.stringify(requestBody); // Convert to a normalized string for comparison
+}
+
+// Function to match intercepted request with HAR and load the response
+function matchRequestWithHar(request, harData, harFolder) {
+    const requestBody = request.postData() ? JSON.parse(request.postData()) : null;
+
+    // Find matching HAR entry
+    const matchingHarEntry = harData.log.entries.find(entry => {
+        const urlMatch = entry.request.url === request.url();
+        const methodMatch = entry.request.method === request.method();
+        const bodyMatch = requestBody
+            ? normalizeRequestBody(requestBody) === normalizeRequestBody(JSON.parse(entry.request.postData || '{}'))
+            : true; // Match body only for requests with postData
+
+        return urlMatch && methodMatch && bodyMatch;
+    });
+
+    if (matchingHarEntry) {
+        // Build response JSON file path from the HAR entry
+        const responseFilePath = path.join(harFolder, matchingHarEntry.response.path);
+
+        // Load response JSON data
         const responseFileData = loadJsonFile(responseFilePath);
 
-        // Return the saved response data (no modification of status or headers)
-        return responseFileData;
+        return responseFileData; // Return the saved response
     }
+
+    return null; // No match found
+}
+
+// Playwright test with custom HAR logic
+test('Test with HAR replay and external JSON files', async ({ page }) => {
+    const harFilePath = path.resolve(__dirname, 'path/to/your.har'); // Path to the HAR file
+    const harFolder = path.dirname(harFilePath); // Folder where request/response JSONs are located
+
+    // Load the HAR file
+    const harData = loadHarFile(harFilePath);
+
+    // Set up route interception
+    await page.route('**/*', async (route, request) => {
+        const responseFileData = matchRequestWithHar(request, harData, harFolder);
+
+        if (responseFileData) {
+            // Fulfill the request with the saved response
+            await route.fulfill({
+                status: responseFileData.status,
+                body: responseFileData.body,
+                headers: responseFileData.headers
+            });
+        } else {
+            // If no match, continue with the live request
+            route.continue();
+        }
+    });
+
+    // Navigate to your app or perform actions to trigger requests
+    await page.goto('https://your-app-url.com');
+
+    // Add your assertions here
+    expect(await page.title()).toBe('Your App Title');
+});
