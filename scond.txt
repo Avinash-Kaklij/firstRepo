@@ -1,0 +1,15 @@
+const harFilePath = path.resolve(__dirname, 'path/to/your.har'); // Path to the HAR file
+
+    // Load the HAR file
+    const harData = loadHarFile(harFilePath);
+
+    // Set up route interception and custom matching logic
+    await page.route('**/*', (route, request) => {
+        if (matchRequestWithHar(request, harData)) {
+            // If request matches the HAR entry and postData, continue the request
+            route.continue();
+        } else {
+            // If no match, abort the request
+            route.abort();
+        }
+    });
