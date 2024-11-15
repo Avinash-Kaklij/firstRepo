@@ -1,5 +1,10 @@
-const urlMatch = entry.request.url === request.url();
-        const methodMatch = entry.request.method === request.method();
-        const bodyMatch = requestData ? normalizeRequestBody(requestData) === normalizeRequestBody(entry.request.postData) : true; // Match body only if POST
+if (matchingHarEntry) {
+        // Extract the path for the response data from the HAR entry
+        const responseFilePath = path.join(folderPath, matchingHarEntry.response.path);
 
-        return urlMatch && methodMatch && bodyMatch;
+        // Load the response data from the folder
+        const responseFileData = loadJsonFile(responseFilePath);
+
+        // Return the saved response data (no modification of status or headers)
+        return responseFileData;
+    }
