@@ -1,72 +1,87 @@
-const fs = require('fs');
-const path = require('path');
-const { test, expect } = require('@playwright/test');
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-// Function to load the HAR file
-function loadHarFile(harFilePath) {
-    return JSON.parse(fs.readFileSync(harFilePath, 'utf8'));
-}
+    <groupId>com.example</groupId>
+    <artifactId>feature-flags</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-// Function to dynamically load postData based on the file path in the HAR file
-function loadPostDataFromFile(postDataFilePath) {
-    const fullPath = path.resolve(__dirname, postDataFilePath); // Resolving relative path to absolute
-    return JSON.parse(fs.readFileSync(fullPath, 'utf8'));
-}
+    <name>Feature Flags with Flagsmith</name>
+    <description>POC for dynamic feature flag handling using Flagsmith in Java 11</description>
+    <properties>
+        <java.version>11</java.version>
+        <spring-boot.version>2.7.5</spring-boot.version>
+    </properties>
 
-// Function to match intercepted requests with the HAR data and postData
-function matchRequestWithHar(request, harData) {
-    const requestData = request.postData() ? JSON.parse(request.postData()) : null;
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>${spring-boot.version}</version>
+        <relativePath/> <!-- Lookup parent from Maven repository -->
+    </parent>
 
-    // Find matching HAR entry by URL and method
-    const matchingHarEntry = harData.log.entries.find(entry => {
-        return entry.request.url === request.url() && entry.request.method === request.method();
-    });
+    <dependencies>
+        <!-- Spring Boot Starter for Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-    if (matchingHarEntry) {
-        const harRequestData = matchingHarEntry.request.postData ? JSON.parse(matchingHarEntry.request.postData.text) : null;
+        <!-- Flagsmith Java SDK -->
+        <dependency>
+            <groupId>com.flagsmith</groupId>
+            <artifactId>flagsmith-java-client</artifactId>
+            <version>4.3.2</version>
+        </dependency>
 
-        // Check if postData is provided in the response and load it dynamically
-        if (matchingHarEntry.response && matchingHarEntry.response.content && matchingHarEntry.response.content.path) {
-            const postDataFilePath = matchingHarEntry.response.content.path; // Path from HAR response
-            const postData = loadPostDataFromFile(postDataFilePath); // Load postData from the file
+        <!-- JSON Handling (Jackson - comes with Spring Boot by default) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
 
-            // Compare the request data with the dynamically loaded postData
-            if (requestData && postData) {
-                // You can modify this logic depending on how your postData is structured
-                if (requestData.data && postData.data) {
-                    requestData.data.var = postData.data.var; // Example: Normalize dynamic fields
-                }
+        <!-- Spring Boot DevTools (Optional: For development convenience) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
 
-                // Compare normalized request data with the dynamically loaded postData
-                return JSON.stringify(requestData) === JSON.stringify(postData);
-            }
-        }
-    }
+        <!-- Lombok (Optional: Reduces boilerplate) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
-    return false; // No match found
-}
+        <!-- Spring Boot Starter for Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-// Test case using the HAR file and dynamically loaded postData for request matching
-test('Test with HAR replay and dynamic postData matching', async ({ page }) => {
-    const harFilePath = path.resolve(__dirname, 'path/to/your.har'); // Path to the HAR file
-
-    // Load the HAR file
-    const harData = loadHarFile(harFilePath);
-
-    // Set up route interception and custom matching logic
-    await page.route('**/*', (route, request) => {
-        if (matchRequestWithHar(request, harData)) {
-            // If request matches the HAR entry and postData, continue the request
-            route.continue();
-        } else {
-            // If no match, abort the request
-            route.abort();
-        }
-    });
-
-    // Navigate to your app or trigger requests to be matched
-    await page.goto('https://your-app-url.com');
-
-    // Perform assertions
-    expect(await page.title()).toBe('Your App Title');
-});
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven Plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
