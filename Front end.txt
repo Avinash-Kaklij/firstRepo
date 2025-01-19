@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Flags Demo</title>
+    <script>
+        async function fetchFeatureConfig() {
+            const response = await fetch('/api/flags/featureX');
+            const config = await response.json();
+
+            // Example: Disable or show fields based on feature flags
+            document.getElementById("input1").disabled = !config.subflag1;
+            document.getElementById("input2").style.display = config.subflag2 ? "block" : "none";
+        }
+
+        window.onload = fetchFeatureConfig;
+    </script>
+</head>
+<body>
+    <h1>Dynamic Input Fields</h1>
+    <input type="text" id="input1" placeholder="Input Field 1">
+    <input type="text" id="input2" placeholder="Input Field 2" style="display: none;">
+</body>
+</html>
