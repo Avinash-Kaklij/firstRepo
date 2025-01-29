@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feature Flags Demo</title>
-    <script>
-        async function fetchFeatureConfig() {
-            const response = await fetch('/api/flags/featureX');
-            const config = await response.json();
-
-            // Example: Disable or show fields based on feature flags
-            document.getElementById("input1").disabled = !config.subflag1;
-            document.getElementById("input2").style.display = config.subflag2 ? "block" : "none";
-        }
-
-        window.onload = fetchFeatureConfig;
-    </script>
-</head>
-<body>
-    <h1>Dynamic Input Fields</h1>
-    <input type="text" id="input1" placeholder="Input Field 1">
-    <input type="text" id="input2" placeholder="Input Field 2" style="display: none;">
-</body>
-</html>
+Backend Development Skills
+API Design and Development:
+Learn to design robust and RESTful APIs with clear documentation (Swagger/OpenAPI), proper versioning, and error handling.
+Study best practices for designing idempotent APIs and handling concurrency.
+Explore GraphQL for efficient querying and optimizing backend-to-frontend communication.
+Advanced Java Programming:
+Deepen knowledge in areas like:
+Concurrency and Parallelism: Master Java threads, CompletableFuture, ForkJoinPool, and Executor frameworks.
+Stream APIs and Functional Programming: Use them for efficient, concise, and parallel data processing.
+Reactive Programming: Learn frameworks like Project Reactor or RxJava for handling asynchronous data streams.
+Database Optimization:
+Study advanced SQL features like CTEs (Common Table Expressions), window functions, and query plans to optimize database operations.
+Learn to design database schemas for high-performance applications, including normalization, denormalization, and indexing strategies.
+Security Best Practices:
+Learn secure backend development practices, such as input validation, token-based authentication (OAuth2, JWT), and securing sensitive information like API keys.
+Explore Spring Security to implement authorization and authentication in Java-based systems.
+----------
+Design Architecture Skills
+System Design Basics:
+Learn to design scalable, maintainable, and robust systems by understanding key concepts like load balancing, caching, database sharding, and microservices architecture.
+Study design patterns (e.g., Singleton, Factory, Repository) and how to implement them effectively in real-world projects.
+High-Level Architecture Design:
+Focus on scalability and resiliency by designing distributed systems that handle high traffic and fault tolerance using techniques like circuit breakers and message queues.
+Practice designing systems from scratch, such as URL shorteners, e-commerce platforms, or ride-sharing apps.
+Event-Driven Architecture:
+Gain familiarity with event-driven systems using message brokers like Kafka, RabbitMQ, or AWS SQS. Learn to design architectures that decouple services while maintaining real-time communication.
