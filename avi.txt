@@ -7,13 +7,18 @@ FLAGS_API = "https://edge.api.flagsmith.com/api/v1/"
 @app.route('/flagsmith/<path:endpoint>', methods=['GET', 'POST'])
 def proxy_flagsmith(endpoint):
     url = f"{FLAGS_API}{endpoint}"
+    
+    # Forward all headers, including Authorization
+    headers = {key: value for key, value in request.headers if key.lower() not in ['host']}
+    
     response = requests.request(
         method=request.method,
         url=url,
-        headers={key: value for key, value in request.headers if key != 'Host'},
+        headers=headers,
         data=request.get_data()
     )
+    
     return Response(response.content, status=response.status_code, headers=dict(response.headers))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)  # Runs on all interfaces
+    app.run(host="0.0.0.0", port=5000)
