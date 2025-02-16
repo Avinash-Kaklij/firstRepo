@@ -1,87 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+from flask import Flask, request, Response
+import requests
 
-    <groupId>com.example</groupId>
-    <artifactId>feature-flags</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+app = Flask(__name__)
+FLAGS_API = "https://edge.api.flagsmith.com/api/v1/"
 
-    <name>Feature Flags with Flagsmith</name>
-    <description>POC for dynamic feature flag handling using Flagsmith in Java 11</description>
-    <properties>
-        <java.version>11</java.version>
-        <spring-boot.version>2.7.5</spring-boot.version>
-    </properties>
+@app.route('/flagsmith/<path:endpoint>', methods=['GET', 'POST'])
+def proxy_flagsmith(endpoint):
+    url = f"{FLAGS_API}{endpoint}"
+    response = requests.request(
+        method=request.method,
+        url=url,
+        headers={key: value for key, value in request.headers if key != 'Host'},
+        data=request.get_data()
+    )
+    return Response(response.content, status=response.status_code, headers=dict(response.headers))
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${spring-boot.version}</version>
-        <relativePath/> <!-- Lookup parent from Maven repository -->
-    </parent>
-
-    <dependencies>
-        <!-- Spring Boot Starter for Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- Flagsmith Java SDK -->
-        <dependency>
-            <groupId>com.flagsmith</groupId>
-            <artifactId>flagsmith-java-client</artifactId>
-            <version>4.3.2</version>
-        </dependency>
-
-        <!-- JSON Handling (Jackson - comes with Spring Boot by default) -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-
-        <!-- Spring Boot DevTools (Optional: For development convenience) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- Lombok (Optional: Reduces boilerplate) -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- Spring Boot Starter for Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Spring Boot Maven Plugin -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- Maven Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-</project>
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)  # Runs on all interfaces
