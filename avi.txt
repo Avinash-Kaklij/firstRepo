@@ -1,24 +1,42 @@
-from flask import Flask, request, Response
-import requests
+import java.sql.*;
+import java.io.*;
+import java.net.*;
 
-app = Flask(__name__)
-FLAGS_API = "https://edge.api.flagsmith.com/api/v1/"
+public class OracleSQLProxy {
+    private static final String ORACLE_DB_URL = "jdbc:oracle:thin:@your_remote_db:1521/your_db";
+    private static final String ORACLE_USER = "your_user";
+    private static final String ORACLE_PASS = "your_password";
+    private static final int PROXY_PORT = 3307; // Custom proxy port
 
-@app.route('/flagsmith/<path:endpoint>', methods=['GET', 'POST'])
-def proxy_flagsmith(endpoint):
-    url = f"{FLAGS_API}{endpoint}"
-    
-    # Forward all headers, including Authorization
-    headers = {key: value for key, value in request.headers if key.lower() not in ['host']}
-    
-    response = requests.request(
-        method=request.method,
-        url=url,
-        headers=headers,
-        data=request.get_data()
-    )
-    
-    return Response(response.content, status=response.status_code, headers=dict(response.headers))
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(PROXY_PORT)) {
+            System.out.println("SQL Proxy running on port " + PROXY_PORT);
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                new Thread(() -> handleClient(clientSocket)).start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    private static void handleClient(Socket clientSocket) {
+        try (Connection conn = DriverManager.getConnection(ORACLE_DB_URL, ORACLE_USER, ORACLE_PASS);
+             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+
+            String sqlQuery = in.readLine();
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sqlQuery)) {
+
+                StringBuilder response = new StringBuilder();
+                while (rs.next()) {
+                    response.append(rs.getString(1)).append("\n");
+                }
+                out.println(response.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
