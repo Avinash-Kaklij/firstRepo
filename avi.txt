@@ -1,42 +1,20 @@
-import java.sql.*;
-import java.io.*;
-import java.net.*;
+worker_processes  1;
 
-public class OracleSQLProxy {
-    private static final String ORACLE_DB_URL = "jdbc:oracle:thin:@your_remote_db:1521/your_db";
-    private static final String ORACLE_USER = "your_user";
-    private static final String ORACLE_PASS = "your_password";
-    private static final int PROXY_PORT = 3307; // Custom proxy port
+events {
+    worker_connections  1024;
+}
 
-    public static void main(String[] args) {
-        try (ServerSocket serverSocket = new ServerSocket(PROXY_PORT)) {
-            System.out.println("SQL Proxy running on port " + PROXY_PORT);
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                new Thread(() -> handleClient(clientSocket)).start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+stream {
+    upstream oracle_pool {
+        least_conn;  # Directs traffic to the least busy connection
+        server your-oracle-db-ip:1521 max_fails=3 fail_timeout=30s;
     }
 
-    private static void handleClient(Socket clientSocket) {
-        try (Connection conn = DriverManager.getConnection(ORACLE_DB_URL, ORACLE_USER, ORACLE_PASS);
-             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-
-            String sqlQuery = in.readLine();
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sqlQuery)) {
-
-                StringBuilder response = new StringBuilder();
-                while (rs.next()) {
-                    response.append(rs.getString(1)).append("\n");
-                }
-                out.println(response.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    server {
+        listen 1522;  # Proxy listens on this port
+        proxy_pass oracle_pool;
+        proxy_connect_timeout 5s;
+        proxy_timeout 60s;
+        proxy_protocol on;
     }
 }
