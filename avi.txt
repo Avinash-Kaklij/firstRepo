@@ -1,9 +1,39 @@
-async function fillByText(page, text: string, value: string) {
-  const locator = page.locator('input, textarea').filter({
-    has: page.getByLabel(new RegExp(`^${text}$`, 'i'))
-  }).or(
-    page.getByPlaceholder(new RegExp(`^${text}$`, 'i'))
-  );
+Mid-Year Performance Summary
+In my role as a Senior Trainee Associate at Western Union, I have made impactful contributions across development, production support, test automation, and feature flagging systems. I worked primarily with Java, Angular 14, SQL, and Oracle SQL, while also enhancing infrastructure and tooling used by the broader team.
 
-  await locator.fill(value);
-}
+Key Achievements:
+🔧 Production Support & Feature Delivery
+Resolved several high-priority production issues with deep root cause analysis and timely fixes.
+
+Delivered full-stack features using Java (Spring Boot) and Angular 14, with a focus on clean, maintainable code and strong alignment to business requirements.
+
+🧪 Test Automation (Playwright)
+Revamped the Playwright test suite to include HAR recording logic.
+
+Enabled environment-specific control over HAR usage and updates via environment variables, improving test reliability and CI/CD flexibility.
+
+Simplified test data sharing via JSON and Excel, enabling quick setup and easier test case creation for developers.
+
+🚀 Feature Flag Management (Flagsmith)
+Spearheaded the integration of Flagsmith for dynamic feature flag management in development and production environments.
+
+Built a Java-based Flagsmith service to fetch and evaluate flags efficiently.
+
+Designed logic for managing feature flags per Agent Profile ID, allowing granular control and faster experimentation.
+
+Contributed to plans for a UI-based configuration tool to handle bulk segment creation, flag updates, and flag status management via the Flagsmith REST API.
+
+🧠 Innovation & Collaboration
+Developed a Chrome extension to auto-fill forms with static test data—enhancing QA/testing efficiency for internal users.
+
+Mentored peers on using the updated test and flag systems, improving team productivity and reducing onboarding time.
+
+How I Achieved This:
+Combined my backend, frontend, and DevOps knowledge to solve problems end-to-end.
+
+Took ownership beyond assigned responsibilities by identifying gaps and proactively implementing solutions.
+
+Continuously collaborated with QA, product owners, and fellow developers to ensure that every change delivered real value.
+
+Maintained a focus on scalability, reusability, and maintainability in every technical decision.
+
