@@ -1,39 +1,55 @@
-Mid-Year Performance Summary
-In my role as a Senior Trainee Associate at Western Union, I have made impactful contributions across development, production support, test automation, and feature flagging systems. I worked primarily with Java, Angular 14, SQL, and Oracle SQL, while also enhancing infrastructure and tooling used by the broader team.
+Great! Here's a **clean, structured version** of your mid-year performance summary, organized by work areas and responsibilities:
 
-Key Achievements:
-🔧 Production Support & Feature Delivery
-Resolved several high-priority production issues with deep root cause analysis and timely fixes.
+---
 
-Delivered full-stack features using Java (Spring Boot) and Angular 14, with a focus on clean, maintainable code and strong alignment to business requirements.
+### **Mid-Year Performance Summary**
 
-🧪 Test Automation (Playwright)
-Revamped the Playwright test suite to include HAR recording logic.
+As a **Senior Trainee Associate** at Western Union, I contributed extensively as part of the **L3 engineering team**, took initiative on Proof of Concepts (POCs), and supported infrastructure improvements—especially around **test automation and feature flag management**. Below is a structured breakdown of my contributions:
 
-Enabled environment-specific control over HAR usage and updates via environment variables, improving test reliability and CI/CD flexibility.
+---
 
-Simplified test data sharing via JSON and Excel, enabling quick setup and easier test case creation for developers.
+#### 🔧 **1. L3 Production Support & Issue Resolution**
 
-🚀 Feature Flag Management (Flagsmith)
-Spearheaded the integration of Flagsmith for dynamic feature flag management in development and production environments.
+* Worked as part of the L3 developer team to **resolve high-priority production issues** across:
 
-Built a Java-based Flagsmith service to fetch and evaluate flags efficiently.
+  * **Frontend** (Angular 14): Fixed UI bugs affecting business flows and customer interactions.
+  * **Backend** (Java, Spring Boot): Diagnosed and fixed logic issues and integration errors.
+  * **Database** (Oracle SQL): Analyzed and resolved query-related or data inconsistency issues.
+* Ensured minimal downtime by performing **root cause analysis** and delivering fast, reliable fixes under pressure.
 
-Designed logic for managing feature flags per Agent Profile ID, allowing granular control and faster experimentation.
+---
 
-Contributed to plans for a UI-based configuration tool to handle bulk segment creation, flag updates, and flag status management via the Flagsmith REST API.
+#### 🚀 **2. Extra Initiatives & Proof of Concept Work**
 
-🧠 Innovation & Collaboration
-Developed a Chrome extension to auto-fill forms with static test data—enhancing QA/testing efficiency for internal users.
+* **Flagsmith Feature Flag Integration:**
 
-Mentored peers on using the updated test and flag systems, improving team productivity and reducing onboarding time.
+  * Built a **Java-based service** for fetching and evaluating feature flags from Flagsmith.
+  * Implemented **Agent Profile ID-based flag logic**, enabling granular configuration per user profile.
+  * Planned a UI tool (POC stage) to support bulk segment creation and dynamic flag updates using Flagsmith's REST API.
+* **Chrome Extension for Form Autofill (POC):**
 
-How I Achieved This:
-Combined my backend, frontend, and DevOps knowledge to solve problems end-to-end.
+  * Developed a lightweight extension to autofill internal forms with static test data—improving testing speed for QA and developers.
 
-Took ownership beyond assigned responsibilities by identifying gaps and proactively implementing solutions.
+---
 
-Continuously collaborated with QA, product owners, and fellow developers to ensure that every change delivered real value.
+#### 🧪 **3. Test Automation Ownership (Playwright)**
 
-Maintained a focus on scalability, reusability, and maintainability in every technical decision.
+* Maintained and enhanced the existing **Playwright test framework**:
 
+  * Introduced support for **HAR recording/playback** with environment-variable control (local vs CI/CD behavior).
+  * Made the HAR logic dynamic per test case and modularized setup for better reusability.
+  * Improved **test data handling** via JSON and Excel integration, making test setup developer-friendly.
+* Collaborated with other developers to ensure smooth onboarding to the updated framework and troubleshoot automation issues.
+
+---
+
+### **Summary of Impact**
+
+* Demonstrated strong **problem-solving ability**, especially in high-stakes production scenarios.
+* Took **ownership beyond core responsibilities**, contributing to tooling, automation, and internal innovation.
+* Ensured high code quality, reusability, and maintainability across all work areas.
+* Actively collaborated across teams to deliver robust, scalable solutions.
+
+---
+
+Let me know if you'd like this formatted for a Word doc, slide, or self-evaluation tool.
