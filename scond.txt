@@ -1,71 +1,85 @@
-Here's a polished and thoughtful section that clearly ties your **daily actions and initiatives** to **Western Union's values and behaviors**, aligned with your mid-year review achievements:
+Here’s a personalized response for your **performance report** under the **"Our Values and Behaviors"** section, showing how you’ve demonstrated each one through your daily QA and automation tasks — especially as a new team member working on the **SCV project** and other initiatives.
 
 ---
 
-### **Demonstration of Values and Behaviors in Daily Work**
-
-#### ✅ **Integrity** – *“We do the right thing. It starts with us.”*
-
-I consistently take ownership of production issues across the stack, ensuring fixes are not just quick but correct. I perform thorough root cause analysis and always prioritize long-term solutions over temporary workarounds, reflecting integrity in every decision I make.
+### **How I Demonstrated Our Values and Behaviors**
 
 ---
 
-#### 🙌 **Respect** – *“We honor the dignity and purpose of both our customers and each other in every interaction.”*
+#### **Integrity – We do the right thing. It starts with us.**
 
-I engage with teammates, QA, and other stakeholders with openness and empathy. Whether it’s helping others understand our Playwright framework or collaborating on feature rollouts, I maintain a respectful and cooperative approach at all times.
-
----
-
-#### 🔐 **Trust** – *“We assume best intentions, live up to our commitments, and deliver on our promises.”*
-
-I have consistently met deadlines, even under pressure, and maintained open communication when timelines needed adjustment. Team members can rely on me to follow through, whether it’s resolving critical issues or improving shared tools.
+I ensure accuracy in my testing and automation work by validating results thoroughly and raising only genuine, well-documented defects. I follow best practices in coding and version control, ensuring transparency and accountability.
 
 ---
 
-#### 💡 **Innovation** – *“We generate ideas for a better tomorrow.”*
+#### **Respect – We honor the dignity and purpose of both our customers and each other in every interaction.**
 
-Beyond my core development responsibilities, I have proactively built solutions like:
-
-* A Chrome extension to simplify testing.
-* A flexible Flagsmith integration service with future plans for a UI tool.
-  These reflect my drive to innovate and continuously improve the way we work.
+I actively listen during sprint discussions, respect others’ ideas, and collaborate positively with teammates and developers. I provide constructive feedback and show professionalism in all interactions.
 
 ---
 
-### **Alignment with Core Behaviors**
+#### **Trust – We assume best intentions, live up to our commitments, and deliver on our promises.**
 
-#### 🎯 **Customer First**
-
-In every production bug I tackle, my first thought is how it affects our users. I prioritize fixes that restore and enhance user experience and business continuity.
-
-#### 🚀 **Drive Results**
-
-I take initiative without waiting for direction—whether it’s fixing urgent issues or building out POCs to solve long-standing developer pain points. I focus on getting things done with quality and efficiency.
-
-#### 🔄 **Reimagine Everything**
-
-My contributions to revamping the Playwright automation suite and HAR logic demonstrate a mindset of constant improvement. I reimagined the way we test, making it more scalable, developer-friendly, and CI-compatible.
-
-#### 💬 **Be Bold**
-
-I proposed and implemented technical solutions outside my core responsibilities, such as the Flagsmith Java service and Chrome extension. I actively speak up to suggest improvements, even when it challenges the status quo.
-
-#### 💰 **Spend Wisely**
-
-I focus on building modular, reusable code and tools that reduce long-term maintenance. The enhancements to our test automation system save developer time and CI resources—adding long-term value without additional cost.
-
-#### 🌍 **Respect Differences**
-
-I value the input of all team members, regardless of role or level. I actively listen to feedback and adapt my work to support both QA and development workflows.
-
-#### 🎯 **Lead with Intent**
-
-Even as a Senior Trainee Associate, I act with purpose—whether I’m mentoring peers on automation setup or leading discussions on new tooling. I strive to set an example through initiative and consistency.
-
-#### 🌟 **Exceed Expectations**
-
-By balancing core production support with value-added initiatives like Flagsmith integration and developer tooling, I go beyond my immediate responsibilities to deliver impact across the team.
+I committed to the SCV automation project and delivered **90% completion within the first month**, fulfilling expectations and earning the trust of my peers and leads through consistency and ownership.
 
 ---
 
-Let me know if you'd like this broken into a shorter version for bullet-style inputs or a self-assessment form.
+#### **Innovation – We generate ideas for a better tomorrow.**
+
+I contributed to enhancing our automation framework by identifying ways to make scripts more modular and maintainable. I also suggested improvements for future test coverage and reusable components.
+
+---
+
+### **Our Behaviors**
+
+---
+
+#### **Customer First – We are passionate about our customers and put them at the center of everything we do.**
+
+Through thorough testing and automation, I focus on ensuring the end-user experience remains smooth, error-free, and aligned with business requirements — especially in critical flows like receipt validation and agent migrations.
+
+---
+
+#### **Drive Results – We hold each other accountable and take decisive and informed action to move our strategy forward.**
+
+I delivered key QA milestones in the SCV project ahead of time and raised impactful defects in other projects, contributing to higher quality releases.
+
+---
+
+#### **Reimagine Everything – We innovate every day, seeking to improve and simplify.**
+
+I adapted quickly to the TypeScript framework, identified areas of improvement, and began scripting automation efficiently, simplifying repetitive validation and boosting test accuracy.
+
+---
+
+#### **Be Bold – We make courageous decisions and follow through.**
+
+Despite being new to the team, I took full ownership of the SCV automation and confidently handled project deliverables, raising blockers or challenges when needed without hesitation.
+
+---
+
+#### **Spend Wisely – We responsibly manage our time, money, and resources to achieve the greatest impact for Western Union.**
+
+I prioritized automation tasks effectively, reused and optimized test components, and ensured high productivity by focusing on high-impact scenarios first.
+
+---
+
+#### **Respect Differences – We appreciate and promote diverse perspectives, recognizing their impact. We act with empathy and care.**
+
+I approach every team interaction with openness and respect, embracing different viewpoints during sprint discussions and peer reviews to build inclusive collaboration.
+
+---
+
+#### **Lead with Intent – We act with clear purpose and in good faith. We motivate and inspire others through our actions.**
+
+I took initiative to lead my own tasks from start to finish and supported others by sharing knowledge or insights that could benefit team testing efforts.
+
+---
+
+#### **Exceed Expectations – We work together to treat every moment as an opportunity to excel.**
+
+By completing 90% of the SCV automation ahead of schedule and contributing critical defects in other releases, I’ve consistently gone beyond the baseline QA expectations.
+
+---
+
+Let me know if you'd like this made more concise or formatted for a specific template.
